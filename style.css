@@ -1,0 +1,16 @@
+#container{
+border: 1px solid black;
+
+}
+
+.card{
+    display: inline-block;
+    width: 150px;
+    min-width: 100px; 
+    height: 100px;
+    margin: 1em;
+    padding: 1em;
+    border: 1px solid black;
+    vertical-align: Top;
+    text-align: center;
+}
