@@ -5,8 +5,38 @@
         <link rel="stylesheet" href="style.css">
     </head>
     <body>
+        <button id="new" >Add a Book</button>
+        <div id="addForm">
+            <form class='formContainer'>
+                <div class="formSection"> 
+                    <label>Book Title</label>
+                    <input name="name" type="text" required>
+                </div>
+                <div class="formSection">
+                    <label> Book Author</label>
+                    <input name="author" type="text" required>
+                </div>
+                <div class="formSection">
+                    <label>Number of Pages</label>
+                    <input name="pages" type="number" min="1" required>
+                </div>
+                <div class="formSection">
+                    <label>Read it yet?</label>
+                    <input type="radio" name="readStatus" value="yes" required>
+                    <label>Yes</label>
+                    <input type="radio" name="readStatus" value="No" required>
+                    <label>No</label>
+                </div>
+                <div class="formSection">
+                    <button type='submit' id="submit">Add</button>
+                    <button onclick="closeForm()">Close</button>
+                </div>
+                
+            </form>
+        </div>
+        
         <div id="container">
-            
+
         </div>
         <script type="text/javascript" src ='script.js'></script>
     </body>

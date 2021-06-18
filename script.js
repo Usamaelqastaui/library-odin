@@ -1,4 +1,14 @@
 const container = document.querySelector('#container');
+const newBook = document.querySelector('#new');
+const submitBtn = document.querySelector('#submit');
+
+function openForm() {
+    document.getElementById("addForm").style.display = "block";
+  }
+  
+  function closeForm() {
+    document.getElementById("addForm").style.display = "none";
+  }
 
 let myLibrary = [
     {   "name" : 'book1',
@@ -29,7 +39,7 @@ function viewBooks(){
     addBookToLibrary('book3', 'author3', 399, true);
     addBookToLibrary('book4', 'author4', 399);
     myLibrary.forEach((book)=>{
-        console.table(book);
+        // console.table(book);
         createCard(book);
         // for (let prop in book){
         //     console.log(book[prop]);
@@ -39,14 +49,14 @@ function viewBooks(){
 
 function createCard(book){
     let bookCard = document.createElement('div');
-    let bookName = document.createElement('h3');
+    let bookName = document.createElement('h1');
     let bookAuthor = document.createElement('h3');
     let bookPages = document.createElement('p');
     let readStatus = document.createElement('p');
 
     bookName.textContent = book['name'];
-    bookAuthor.textContent = book['author'];
-    bookPages.textContent = book['pages'];
+    bookAuthor.textContent = `By ${book['author']}` ;
+    bookPages.textContent = `${book['pages']} pages` ;
     readStatus.textContent = (book['read'])? 'Read': 'Did not read';
 
     bookCard.appendChild(bookName);
@@ -58,4 +68,26 @@ function createCard(book){
 
     container.appendChild(bookCard);
 }
+
+newBook.addEventListener('click',(e)=>{
+    openForm();
+})
+
+// submitBtn.addEventListener('click', (e)=>{
+//     e.preventDefault();
+//     const formData = new FormData(e.target);
+//     console.log(formData);
+// })
+
+document.querySelector('form').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    const data = Array.from(formData.entries()).reduce((memo, pair) => ({
+        ...memo,
+        [pair[0]]: pair[1],
+      }), {});
+    console.log(data);
+    createCard(data);
+    closeForm();
+  });
 viewBooks();
