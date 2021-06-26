@@ -14,12 +14,12 @@ let myLibrary = [
     {   "name" : 'book1',
         "author" : ' author1',
         "pages" : 200,
-        "read" : false
+        "read" : 'false'
     },{
         "name" : 'book2',
         "author" : ' author2',
         "pages" : 300,
-        "read" : true  
+        "read" : 'true'  
     }
 ];
 
@@ -50,7 +50,7 @@ function createCard(book){
     let bookName = document.createElement('h1');
     let bookAuthor = document.createElement('h3');
     let bookPages = document.createElement('p');
-    let readStatus = document.createElement('p');
+    let readStatus = document.createElement('button');
     let removeBook = document.createElement('button');
 
     bookCard.setAttribute('data-index',myLibrary.indexOf(book));
@@ -61,12 +61,21 @@ function createCard(book){
         myLibrary.splice(bookIndex, 1);
         viewBooks();
     });
-
+    readStatus.addEventListener('click',(e)=>{
+        let bookIndex = e.target.parentNode.dataset.index
+        console.log(myLibrary);
+        if(myLibrary[bookIndex].read === 'true'){
+            myLibrary[bookIndex].read = 'false'
+        } else {
+            myLibrary[bookIndex].read = 'true' 
+        }
+        viewBooks();
+    });
     removeBook.textContent = 'Remove From List'
     bookName.textContent = book['name'];
     bookAuthor.textContent = `By ${book['author']}` ;
     bookPages.textContent = `${book['pages']} pages` ;
-    readStatus.textContent = (book['readStatus'] === 'yes')? 'Read': 'Did not read';
+    readStatus.textContent = (book['read'] === 'true')? 'Read': 'Did not read';
 
     bookCard.appendChild(bookName);
     bookCard.appendChild(bookAuthor);
