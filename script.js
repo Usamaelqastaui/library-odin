@@ -36,14 +36,12 @@ function addBookToLibrary(name, author, pages, read) {
 }
 
 function viewBooks(){
-    addBookToLibrary('book3', 'author3', 399, true);
-    addBookToLibrary('book4', 'author4', 399);
+
+    //Since no Storage Used, this acts as a reload/refresh.
+    container.innerHTML = ' ';
+
     myLibrary.forEach((book)=>{
-        // console.table(book);
         createCard(book);
-        // for (let prop in book){
-        //     console.log(book[prop]);
-        // }
     })
 }
 
@@ -53,16 +51,29 @@ function createCard(book){
     let bookAuthor = document.createElement('h3');
     let bookPages = document.createElement('p');
     let readStatus = document.createElement('p');
+    let removeBook = document.createElement('button');
 
+    bookCard.setAttribute('data-index',myLibrary.indexOf(book));
+    removeBook.setAttribute('id','remove');
+
+    removeBook.addEventListener('click',(e)=>{
+        let bookIndex = e.target.parentNode.dataset.index
+        myLibrary.splice(bookIndex, 1);
+        viewBooks();
+    });
+
+    removeBook.textContent = 'Remove From List'
     bookName.textContent = book['name'];
     bookAuthor.textContent = `By ${book['author']}` ;
     bookPages.textContent = `${book['pages']} pages` ;
-    readStatus.textContent = (book['read'])? 'Read': 'Did not read';
+    readStatus.textContent = (book['readStatus'] === 'yes')? 'Read': 'Did not read';
 
     bookCard.appendChild(bookName);
     bookCard.appendChild(bookAuthor);
     bookCard.appendChild(bookPages);
     bookCard.appendChild(readStatus);
+    bookCard.appendChild(removeBook);
+
 
     bookCard.classList.add('card');
 
@@ -73,11 +84,7 @@ newBook.addEventListener('click',(e)=>{
     openForm();
 })
 
-// submitBtn.addEventListener('click', (e)=>{
-//     e.preventDefault();
-//     const formData = new FormData(e.target);
-//     console.log(formData);
-// })
+
 
 document.querySelector('form').addEventListener('submit', (e) => {
     e.preventDefault();
@@ -87,7 +94,11 @@ document.querySelector('form').addEventListener('submit', (e) => {
         [pair[0]]: pair[1],
       }), {});
     console.log(data);
+    myLibrary.push(data);
     createCard(data);
     closeForm();
   });
-viewBooks();
+
+window.addEventListener('load',(e)=>{
+    viewBooks();
+});
